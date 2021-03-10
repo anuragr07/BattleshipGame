@@ -91,4 +91,7 @@ public class Controller {
 		}
 
 	}
+	public void resetGuesses() {
+		guesses = 0;
+	}
 }

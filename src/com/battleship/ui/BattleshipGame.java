@@ -130,6 +130,7 @@ public class BattleshipGame {
 	}
 	
 	public void resetGame () {
+		controller.resetGuesses();
 		gameStatus.reset();
 		timer.reset();
 		spawningNewShipsLocation();
