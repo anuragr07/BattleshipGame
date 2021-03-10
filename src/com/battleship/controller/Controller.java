@@ -55,14 +55,6 @@ public class Controller {
 							battleshipGame.getGameStatus().displayHit(guesses);
 							if(convoy.isSunk()) {
 								battleshipGame.getGameStatus().displaySunk(guesses);
-								if(convoy.shipsSunk == convoy.numShips) {
-									//console check for winning condition
-									//System.out.println("All ships destroyed");
-									battleshipGame.updateFiringResultAt(position, hit);
-									battleshipGame.getGameStatus().displayWON(guesses);
-									//TODO: timer stop method here
-									closeGame();
-								}
 							}
 						}
 						else {
@@ -80,7 +72,8 @@ public class Controller {
 					battleshipGame.setLoading(false);
 					
 					if(convoy.shipsSunk == convoy.numShips) {
-						System.out.println("All ships destroyed");
+						battleshipGame.updateFiringResultAt(position, hit);
+						battleshipGame.getGameTimer().stopTimer();
 						battleshipGame.displayWON(guesses);
 					}
 					
@@ -97,17 +90,5 @@ public class Controller {
 			e.printStackTrace();
 		}
 
-	}
-
-	public void endGame() {
-		battleshipGame.getGameStatus().displayLOSE();
-		this.battleshipGame.getGameTimer().stopTimer();
-		closeGame();
-	}
-	public void closeGame() {
-		battleshipGame.getFrame().dispatchEvent(new WindowEvent(battleshipGame.getFrame(), WindowEvent.WINDOW_CLOSING));
-	}
-	public void resetGame() {
-		this.battleshipGame.resetGame();
 	}
 }

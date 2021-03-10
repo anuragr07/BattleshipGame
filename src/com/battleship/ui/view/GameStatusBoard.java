@@ -55,11 +55,5 @@ public class GameStatusBoard extends JPanel {
 
 	public void displayWON(int guesses) {
 		guessDisplay.setText("You won in " + guesses + " guesses!");
-		JOptionPane.showMessageDialog(game, "Congratulations !!! You Won!!!","Game Over",JOptionPane.INFORMATION_MESSAGE);	
-		//this.game.dispatchEvent(new WindowEvent(game, WindowEvent.WINDOW_CLOSING));
-	}
-	public void displayLOSE() {
-		JOptionPane.showMessageDialog(game, "Sorry, you lost!","Game Over",JOptionPane.INFORMATION_MESSAGE);	
-		//this.game.dispatchEvent(new WindowEvent(game, WindowEvent.WINDOW_CLOSING));
 	}
 }

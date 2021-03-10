@@ -31,7 +31,7 @@ public class BattleshipGame {
 	private GameTimer timer;
 	JLayeredPane layeredPane;
 	Controller controller;
-	public static Convoy convoy;
+	private Convoy convoy = new Convoy();
 	private JLabel labelArray[];
 	Convoy[] ships;
 	GameStatusBoard gameStatus;
@@ -113,7 +113,7 @@ public class BattleshipGame {
 		int dialogButton = JOptionPane.YES_NO_OPTION;
 		int dialogResult = JOptionPane.showConfirmDialog(null, "You won!!! Do you want to play again?", "Game Over",dialogButton);
 		if(dialogResult == 0) {
-			controller.resetGame();
+			resetGame();
 		} else {
 			this.frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
 		}
@@ -123,7 +123,7 @@ public class BattleshipGame {
 		int dialogButton = JOptionPane.YES_NO_OPTION;
 		int dialogResult = JOptionPane.showConfirmDialog(null, "You Lost!!! Do you want to play again?", "Game Over",dialogButton);
 		if(dialogResult == 0) {
-			controller.resetGame();
+			resetGame();
 		} else {
 			this.frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
 		}
@@ -141,16 +141,23 @@ public class BattleshipGame {
 	public void spawningNewShipsLocation () {
 		// spawning 3 ships
 		int numShips = 3;
-		int shipsSunk = 0;
 		int boardSize = 7;
 		int shipLength = 3;
-
+		String[]hits = {
+				"no","no","no",
+				"no","no","no",
+				"no","no","no",
+				};
 		ships = new Convoy[numShips];
+		if(convoy != null) {
+			convoy.shipsSunk = 0;
+			convoy.setHit(hits);
+		}
 		do {
 			for (int i = 0; i < numShips; i++) {
 				ships[i] = new Convoy(generateShip(boardSize, shipLength));
 			}
-		} while(collison(ships));
+		} while(collison(ships,convoy));
 	}
 
 	/**
@@ -258,7 +265,7 @@ public class BattleshipGame {
 	}
 
 	// collision check method
-	public static boolean collison(Convoy[] ships) {
+	public static boolean collison(Convoy[] ships, Convoy convoy) {
 		List<String> allLocs = new ArrayList<>();
 		for (int i = 0; i < ships.length; i++) {
 			for (int j = 0; j < ships[i].getLoc().length; j++) {
@@ -275,13 +282,13 @@ public class BattleshipGame {
 		for (int i = 0; i < locsArray.length; i++) {
 			locsArray[i] = allLocs.get(i);
 		}
-
-		convoy = new Convoy(locsArray);
+		
+		convoy.setLoc(locsArray);
 
 // 		Console for ships locations
-//		System.out.println("ships locations: ");
+//		System.out.println("\nships locations: ");
 //		System.out.println();
-//		for (String i : locsArray) {
+//		for (String i : convoy.getLoc()) {
 //			System.out.print(i + " ");
 //		}
 		return false;

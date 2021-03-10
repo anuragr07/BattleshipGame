@@ -3,12 +3,9 @@ package com.battleship.model;
 // This is the model class and we will create this as it is in the example project
 public class Convoy {
 
-	int boardSize = 7;
 	public int numShips = 9;
 	int shipLength = 3;
 	public int shipsSunk = 0;
-		
-	int[] model = {boardSize, numShips, shipLength, shipsSunk};
 	
 	private String[] locs;
 	
@@ -18,9 +15,11 @@ public class Convoy {
 			"no","no","no",
 			};
 	
-	
+	public Convoy() {
+		
+	}
 	public Convoy(String[]loc) {
-		this.locs= loc;
+		locs= loc;
 	}
 	
 	public String[] getLoc() {
@@ -59,7 +58,7 @@ public class Convoy {
 	public boolean fireGuess(String guess) {
 		
 		for(int i=0; i<locs.length; i++) {
-			if(guess.equals(locs[i])){
+			if(guess.equals(this.locs[i])){
 				if(this.hits[i].equals("hit")) {
 					return true;
 				}
